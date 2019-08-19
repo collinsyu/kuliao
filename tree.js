@@ -161,4 +161,6 @@ TreeData.prototype.perttyDraw = function(){
     this._perttyDraw(this.treedata,0,0)
 }
 var x = new TreeData();
-x.genData(20);
+x.genData(30);
+x.treedata;
+x.perttyDraw()
