@@ -133,22 +133,44 @@ TreeData.prototype.findNextNode = function(obj){
 }
 
 TreeData.prototype._perttyDraw = function(obj,k,i){
+    
     // debugger
     // var str = "┝";"│" ┕
     // NOTE: 2019-08-19 15:25:32 这里要查找下一级是否存在，存在就是t，不存在是就是结束
     var r = [];
-    r.push(" │ ".repeat(k-1>0?k-1:0));
-
-    if(this.findNextNode(obj)){
-        r.push("┝ ")
-    }else{
-        r.push("┕ ")
-    }
     // r.push(" │ ".repeat(k-1>0?k-1:0));
+    var r = [];
+    var _k = k-1>0?k-1:0;
+    // var _k = k-1>0?k-1:0;
+    for (let ii = 0; ii < _k; ii++) {
+        r.push(" │ ") 
+    }
+    var parentNode = this.findParentById(obj.parent);
+    if(parentNode){
+        // debugger
+        if(!this.findNextNode(parentNode)){
+            if(r.length>1){
+                r.pop()
+                r.push("   ")
+            }
+            
+        }
+    }
+    
+    
+    if(this.findNextNode(obj)){
+        r.push(" ┝ ")
+    }else{
+
+        // r.pop()
+        // r.push("       ")
+        r.push(" ┕ ")
+    }
+
     if(this.isRoot(obj.id)){
         r = []
     }
-    console.log(r.join(" ")+i+" "+obj.name);
+    console.log(r.join("")+i+" "+obj.name);
     
     k++
     if(obj.children){
@@ -161,6 +183,6 @@ TreeData.prototype.perttyDraw = function(){
     this._perttyDraw(this.treedata,0,0)
 }
 var x = new TreeData();
-x.genData(30);
+x.genData(100);
 x.treedata;
 x.perttyDraw()
